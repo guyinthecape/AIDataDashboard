@@ -15,7 +15,7 @@ const TeamMember = ({
       <i className="fas fa-user-circle text-bright-orange text-5xl"></i>
     </div>
     <h4 className="text-xl font-semibold text-charcoal">{name}</h4>
-    <p className="text-bright-orange">{role}</p>
+    <p className="text-bright-orange font-medium">{role}</p>
     <p className="mt-2 text-charcoal">{bio}</p>
   </div>
 );
@@ -46,7 +46,7 @@ const About = () => {
             <div className="md:w-1/2">
               <h3 className="text-xl font-semibold text-charcoal mb-4">Our Story</h3>
               <p className="text-charcoal mb-4">
-                Founded in 2024 and headquartered in New York City, SpecifiAI was created to address the growing need for high-quality, ethically sourced training data in the AI industry.
+                Founded in 2022 and headquartered in New York City, SpecifiAI was created to address the growing need for high-quality, ethically sourced training data in the AI industry.
               </p>
               <p className="text-charcoal mb-4">
                 As AI regulation increases globally, we recognized that many developers struggle to find training data that meets both technical and legal requirements. Our team of data scientists, legal experts, and AI ethicists work together to provide solutions that help companies build better, more responsible AI systems.
@@ -54,11 +54,11 @@ const About = () => {
               <div className="flex items-center mt-6">
                 <div className="flex items-center mr-6">
                   <i className="fas fa-map-marker-alt text-bright-orange mr-2"></i>
-                  <span>NYC, USA</span>
+                  <span className="text-charcoal">NYC, USA</span>
                 </div>
                 <div className="flex items-center">
                   <i className="far fa-calendar-alt text-bright-orange mr-2"></i>
-                  <span>Est. 2024</span>
+                  <span className="text-charcoal">Est. 2022</span>
                 </div>
               </div>
               <Button className="mt-6 bg-bright-orange hover:bg-deep-orange text-white">
@@ -69,26 +69,47 @@ const About = () => {
 
           {/* Team Section */}
           <h3 className="text-2xl font-semibold text-charcoal text-center mb-8">Our Leadership Team</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* CEO */}
             <TeamMember 
-              name="Sarah Chen" 
+              name="Vatsal Patel" 
               role="CEO & Co-Founder" 
-              bio="Former AI Ethics Researcher at MIT with 10+ years in data science and AI governance."
+              bio="Visionary leader with extensive experience in AI ethics and data governance, driving SpecifiAI's mission and strategy."
             />
 
-            {/* Team Member 2 */}
+            {/* CMO */}
             <TeamMember 
-              name="Marcus Johnson" 
-              role="CTO & Co-Founder" 
-              bio="Previously led data infrastructure at a major tech company and specialized in scalable AI systems."
+              name="Palak Agarwal" 
+              role="CMO" 
+              bio="Marketing strategist with a background in technology branding and go-to-market strategies for AI products."
             />
 
-            {/* Team Member 3 */}
+            {/* CTO */}
             <TeamMember 
-              name="Aisha Patel" 
-              role="Chief Legal Officer" 
-              bio="Specialized in AI regulation and data privacy law with experience at major tech companies and regulatory bodies."
+              name="Yajan Munjal" 
+              role="CTO" 
+              bio="Technical innovator with expertise in building scalable data infrastructure and AI systems architecture."
+            />
+
+            {/* CFO */}
+            <TeamMember 
+              name="Anish Kota" 
+              role="CFO" 
+              bio="Financial expert with experience in scaling startups and optimizing business operations in the tech sector."
+            />
+
+            {/* CPO */}
+            <TeamMember 
+              name="Trisha" 
+              role="Chief People Officer" 
+              bio="HR leader focused on building diverse teams and fostering an innovative company culture in the AI industry."
+            />
+
+            {/* COO */}
+            <TeamMember 
+              name="Anh Nguyen" 
+              role="COO" 
+              bio="Operations specialist with a track record of streamlining processes and scaling data-driven organizations."
             />
           </div>
         </div>

@@ -1,10 +1,73 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
+import { Link } from "wouter";
 
+// Dashboard layout with main site header/footer
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentPercentage, setCurrentPercentage] = useState(60);
+  const [usageData, setUsageData] = useState([
+    { month: "Jan", amount: 40 },
+    { month: "Feb", amount: 65 },
+    { month: "Mar", amount: 55 },
+    { month: "Apr", amount: 85 },
+    { month: "May", amount: 75 }
+  ]);
+  const [notifications, setNotifications] = useState(3);
+  const [liveMetric, setLiveMetric] = useState(12000);
+  const [recentActivity, setRecentActivity] = useState([
+    { action: "Downloaded", item: "HealthcareTerms-v2", time: "2 hours ago" },
+    { action: "Uploaded", item: "Custom annotations", time: "1 day ago" },
+    { action: "Ordered", item: "FinTech-Queries dataset", time: "3 days ago" },
+    { action: "Renewed", item: "Enterprise subscription", time: "1 week ago" }
+  ]);
+
+  // Simulate live updates
+  useEffect(() => {
+    // Update time every second
+    const timeInterval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // Simulate random data changes every 5 seconds
+    const dataInterval = setInterval(() => {
+      // Random fluctuation for usage percentage
+      setCurrentPercentage(prev => {
+        const newVal = prev + (Math.random() > 0.5 ? 1 : -1);
+        return Math.min(Math.max(newVal, 30), 85); // Keep between 30% and 85%
+      });
+
+      // Random fluctuation in the data points metric
+      setLiveMetric(prev => {
+        return prev + Math.floor(Math.random() * 200) - 100;
+      });
+
+      // Occasionally add a new activity
+      if (Math.random() > 0.8) {
+        const activities = [
+          { action: "Analyzed", item: "Customer feedback dataset", time: "just now" },
+          { action: "Updated", item: "Product categorization labels", time: "just now" },
+          { action: "Processed", item: "New data batch", time: "just now" },
+          { action: "Received", item: "Compliance update notification", time: "just now" }
+        ];
+        const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+        setRecentActivity(prev => [randomActivity, ...prev.slice(0, 3)]);
+      }
+
+      // Occasionally add a notification
+      if (Math.random() > 0.85) {
+        setNotifications(prev => prev + 1);
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(timeInterval);
+      clearInterval(dataInterval);
+    };
+  }, []);
 
   const sidebarItems = [
     { id: "overview", icon: "fa-chart-pie", label: "Overview" },
@@ -38,7 +101,7 @@ const Dashboard = () => {
     }
   ];
 
-  // Status colors mapping
+  // Status colors mapping with updated colors
   const statusColors = {
     "Processing": "bg-blue-100 text-blue-800",
     "Completed": "bg-green-100 text-green-800",
@@ -48,35 +111,54 @@ const Dashboard = () => {
   // Dataset statistics
   const datasetStats = [
     { label: "Total Datasets", value: 8, icon: "fa-database", change: "+3 this month" },
-    { label: "Training Points", value: "1.2M", icon: "fa-chart-line", change: "+150K this month" },
+    { label: "Training Points", value: `${(liveMetric/1000).toFixed(1)}K`, icon: "fa-chart-line", change: "+150K this month" },
     { label: "Active Models", value: 5, icon: "fa-brain", change: "+1 this month" }
   ];
 
-  // Recent activity
-  const recentActivity = [
-    { action: "Downloaded", item: "HealthcareTerms-v2", time: "2 hours ago" },
-    { action: "Uploaded", item: "Custom annotations", time: "1 day ago" },
-    { action: "Ordered", item: "FinTech-Queries dataset", time: "3 days ago" },
-    { action: "Renewed", item: "Enterprise subscription", time: "1 week ago" }
-  ];
+  // Formatted current time
+  const formattedTime = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true
+  }).format(currentTime);
 
-  // Usage data for chart
-  const monthlyUsage = [
-    { month: "Jan", amount: 40 },
-    { month: "Feb", amount: 65 },
-    { month: "Mar", amount: 55 },
-    { month: "Apr", amount: 85 },
-    { month: "May", amount: 75 }
-  ];
+  // Format date for dashboard
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(currentTime);
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "overview":
         return (
           <>
-            <div className="mb-8">
-              <h1 className="text-2xl font-semibold text-charcoal">Dashboard Overview</h1>
-              <p className="text-gray-500">Welcome back, Sarah! Here's the current status of your AI training data.</p>
+            <div className="mb-8 flex flex-col md:flex-row justify-between items-start">
+              <div>
+                <h1 className="text-2xl font-semibold text-charcoal">Dashboard Overview</h1>
+                <p className="text-charcoal">Welcome back, Vatsal! Here's the current status of your AI training data.</p>
+              </div>
+              <div className="mt-4 md:mt-0 flex flex-col items-end">
+                <p className="text-sm text-charcoal font-medium">{formattedDate}</p>
+                <p className="text-2xl font-bold text-bright-orange">{formattedTime}</p>
+              </div>
+            </div>
+            
+            {/* Live Status Banner */}
+            <div className="bg-warm-cream rounded-md p-4 mb-8 flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="h-3 w-3 rounded-full bg-success-green animate-pulse mr-3"></div>
+                <p className="text-charcoal font-medium">System Status: <span className="text-success-green">Operational</span></p>
+              </div>
+              <div className="text-charcoal">
+                <span className="inline-flex items-center bg-white px-2.5 py-1 rounded-full text-xs font-medium">
+                  <span className="h-2 w-2 rounded-full bg-bright-orange animate-pulse mr-1.5"></span>
+                  Live Data
+                </span>
+              </div>
             </div>
             
             {/* Dataset Stats */}
@@ -85,7 +167,7 @@ const Dashboard = () => {
                 <Card key={index} className="bg-white p-6 border border-gray-100 hover:shadow-md transition-shadow duration-300">
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-gray-500 text-sm">{stat.label}</p>
+                      <p className="text-charcoal text-sm">{stat.label}</p>
                       <h2 className="text-2xl font-semibold text-charcoal mt-1">{stat.value}</h2>
                     </div>
                     <div className="h-10 w-10 rounded-full bg-light-orange flex items-center justify-center">
@@ -102,7 +184,10 @@ const Dashboard = () => {
             {/* Usage Graph + Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               <Card className="lg:col-span-2 bg-white p-6 border border-gray-100">
-                <h3 className="font-semibold text-charcoal mb-4">Monthly Dataset Usage</h3>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-semibold text-charcoal">Monthly Dataset Usage</h3>
+                  <span className="bg-green-50 text-green-700 text-xs px-2 py-1 rounded-full font-medium">Live Updates</span>
+                </div>
                 <div className="h-64 w-full">
                   <svg width="100%" height="100%" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
                     {/* X and Y Axis */}
@@ -110,7 +195,7 @@ const Dashboard = () => {
                     <line x1="50" y1="50" x2="50" y2="200" stroke="#E5E7EB" strokeWidth="2"/>
                     
                     {/* Bars */}
-                    {monthlyUsage.map((data, i) => {
+                    {usageData.map((data, i) => {
                       const barWidth = 50;
                       const spacing = 100;
                       const x = 75 + (i * spacing);
@@ -124,7 +209,7 @@ const Dashboard = () => {
                             y={y} 
                             width={barWidth} 
                             height={height} 
-                            fill="#FDBA74"
+                            fill={i === usageData.length - 1 ? "#FDBA74" : "#FFE8CC"} 
                             rx="4"
                           />
                           <rect 
@@ -132,14 +217,14 @@ const Dashboard = () => {
                             y={y} 
                             width={barWidth} 
                             height="10" 
-                            fill="#F97316"
+                            fill={i === usageData.length - 1 ? "#F97316" : "#D97706"}
                             rx="4"
                           />
                           <text 
                             x={x + barWidth/2} 
                             y="220" 
                             textAnchor="middle" 
-                            fill="#6B7280"
+                            fill="#1F2937"
                             fontSize="12"
                           >
                             {data.month}
@@ -157,13 +242,25 @@ const Dashboard = () => {
                         </g>
                       );
                     })}
+
+                    {/* Flashing indicator on most recent bar */}
+                    <circle 
+                      cx={75 + ((usageData.length - 1) * 100) + 25} 
+                      cy={200 - (usageData[usageData.length - 1].amount * 1.5) - 20} 
+                      r="4" 
+                      fill="#F97316"
+                      className="animate-pulse"
+                    />
                   </svg>
                 </div>
               </Card>
               
               <Card className="bg-white p-6 border border-gray-100">
-                <h3 className="font-semibold text-charcoal mb-4">Recent Activity</h3>
-                <div className="space-y-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-semibold text-charcoal">Recent Activity</h3>
+                  <span className="text-xs text-gray-500 animate-pulse">Live</span>
+                </div>
+                <div className="space-y-4 max-h-[250px] overflow-y-auto">
                   {recentActivity.map((activity, index) => (
                     <div key={index} className="flex items-start space-x-3">
                       <div className="h-8 w-8 rounded-full bg-warm-cream flex items-center justify-center mt-1">
@@ -173,8 +270,11 @@ const Dashboard = () => {
                         <p className="text-sm font-medium text-charcoal">
                           {activity.action} <span className="text-bright-orange">{activity.item}</span>
                         </p>
-                        <p className="text-xs text-gray-500">{activity.time}</p>
+                        <p className="text-xs text-charcoal">{activity.time}</p>
                       </div>
+                      {activity.time === "just now" && (
+                        <span className="h-2 w-2 rounded-full bg-bright-orange animate-pulse mt-2"></span>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -187,24 +287,24 @@ const Dashboard = () => {
               <Card className="bg-white p-6 border border-gray-100">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-gray-500 text-sm">DataForge Orders</p>
+                    <p className="text-charcoal text-sm">DataForge Orders</p>
                     <h2 className="text-2xl font-semibold text-charcoal mt-1">3 Active</h2>
                   </div>
-                  <div className="h-10 w-10 rounded-full bg-light-orange flex items-center justify-center">
-                    <i className="fas fa-hammer text-bright-orange"></i>
+                  <div className="h-10 w-10 rounded-full bg-[#FFF0E5] flex items-center justify-center shadow-sm">
+                    <i className="fas fa-hammer text-deep-orange"></i>
                   </div>
                 </div>
                 <div className="mt-4">
                   <div className="flex justify-between mb-1 text-sm">
-                    <span>Progress</span>
-                    <span className="font-medium">60%</span>
+                    <span className="text-charcoal">Progress</span>
+                    <span className="font-medium text-charcoal">{currentPercentage}%</span>
                   </div>
-                  <Progress value={60} className="h-2 bg-gray-100" indicatorClassName="bg-bright-orange" />
+                  <Progress value={currentPercentage} className="h-2 bg-gray-100" indicatorClassName="bg-bright-orange" />
                 </div>
                 <div className="mt-2 flex items-center text-sm">
                   <span className="text-success-green font-medium">On Schedule</span>
-                  <span className="mx-2">•</span>
-                  <span>Next delivery: 2 days</span>
+                  <span className="mx-2 text-charcoal">•</span>
+                  <span className="text-charcoal">Next delivery: 2 days</span>
                 </div>
               </Card>
               
@@ -212,24 +312,24 @@ const Dashboard = () => {
               <Card className="bg-white p-6 border border-gray-100">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-gray-500 text-sm">Dataset Usage</p>
-                    <h2 className="text-2xl font-semibold text-charcoal mt-1">12,000 Points</h2>
+                    <p className="text-charcoal text-sm">Dataset Usage</p>
+                    <h2 className="text-2xl font-semibold text-charcoal mt-1">{liveMetric.toLocaleString()} Points</h2>
                   </div>
-                  <div className="h-10 w-10 rounded-full bg-light-orange flex items-center justify-center">
-                    <i className="fas fa-database text-bright-orange"></i>
+                  <div className="h-10 w-10 rounded-full bg-[#FFE8CC] flex items-center justify-center shadow-sm">
+                    <i className="fas fa-database text-[#D97706]"></i>
                   </div>
                 </div>
                 <div className="mt-4">
                   <div className="flex justify-between mb-1 text-sm">
-                    <span>Monthly quota</span>
-                    <span className="font-medium">60%</span>
+                    <span className="text-charcoal">Monthly quota</span>
+                    <span className="font-medium text-charcoal">{Math.round(liveMetric / 200)}%</span>
                   </div>
-                  <Progress value={60} className="h-2 bg-gray-100" indicatorClassName="bg-bright-orange" />
+                  <Progress value={Math.round(liveMetric / 200)} className="h-2 bg-gray-100" indicatorClassName="bg-[#D97706]" />
                 </div>
                 <div className="mt-2 flex items-center text-sm">
                   <span className="text-charcoal font-medium">20,000 total</span>
-                  <span className="mx-2">•</span>
-                  <span>Renews in 18 days</span>
+                  <span className="mx-2 text-charcoal">•</span>
+                  <span className="text-charcoal">Renews in 18 days</span>
                 </div>
               </Card>
               
@@ -237,24 +337,24 @@ const Dashboard = () => {
               <Card className="bg-white p-6 border border-gray-100">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-gray-500 text-sm">Compliance Score</p>
+                    <p className="text-charcoal text-sm">Compliance Score</p>
                     <h2 className="text-2xl font-semibold text-charcoal mt-1">97%</h2>
                   </div>
-                  <div className="h-10 w-10 rounded-full bg-light-orange flex items-center justify-center">
-                    <i className="fas fa-shield-alt text-bright-orange"></i>
+                  <div className="h-10 w-10 rounded-full bg-[#FEF2F2] flex items-center justify-center shadow-sm">
+                    <i className="fas fa-shield-alt text-[#B91C1C]"></i>
                   </div>
                 </div>
                 <div className="mt-4">
                   <div className="flex justify-between mb-1 text-sm">
-                    <span>Overall rating</span>
-                    <span className="font-medium">Excellent</span>
+                    <span className="text-charcoal">Overall rating</span>
+                    <span className="font-medium text-charcoal">Excellent</span>
                   </div>
                   <Progress value={97} className="h-2 bg-gray-100" indicatorClassName="bg-success-green" />
                 </div>
                 <div className="mt-2 flex items-center text-sm">
                   <span className="text-success-green font-medium">All checks passed</span>
-                  <span className="mx-2">•</span>
-                  <span>Last checked: Today</span>
+                  <span className="mx-2 text-charcoal">•</span>
+                  <span className="text-charcoal">Last checked: Today</span>
                 </div>
               </Card>
             </div>
@@ -271,11 +371,11 @@ const Dashboard = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dataset Name</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Dataset Name</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Product</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Status</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Delivery</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Action</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -285,14 +385,14 @@ const Dashboard = () => {
                           <div className="text-sm font-medium text-charcoal">{order.name}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">{order.product}</div>
+                          <div className="text-sm text-charcoal">{order.product}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors[order.status as keyof typeof statusColors]}`}>
                             {order.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.delivery}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-charcoal">{order.delivery}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button className="text-bright-orange hover:text-deep-orange">{order.action}</button>
                         </td>
@@ -308,21 +408,89 @@ const Dashboard = () => {
         return (
           <div className="p-4">
             <h2 className="text-2xl font-semibold text-charcoal mb-6">My Datasets</h2>
-            <p className="text-gray-500 mb-6">Browse and manage your available datasets.</p>
-            <Card className="bg-white p-6 mb-4 border border-gray-100">
-              <div className="text-lg font-medium text-charcoal mb-2">Datasets tab content</div>
-              <p className="text-gray-500">Coming soon: dataset management interface.</p>
-            </Card>
+            <p className="text-charcoal mb-6">Browse and manage your available datasets.</p>
+            
+            {/* Dataset filters */}
+            <div className="bg-warm-cream p-4 rounded-lg mb-6 flex flex-wrap gap-4">
+              <Button className="bg-bright-orange hover:bg-deep-orange text-white">All Datasets</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">DataForge</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">Atlas Library</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">Prism Packs</Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Card key={item} className="bg-white hover:shadow-md transition-all duration-300 overflow-hidden">
+                  <div className="h-2 bg-bright-orange"></div>
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <h4 className="font-semibold text-lg text-charcoal">Dataset #{item}</h4>
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold">Active</span>
+                    </div>
+                    <p className="text-charcoal mb-6">Sample dataset description with information about content and purpose.</p>
+                    <div className="flex justify-between items-center text-sm text-charcoal">
+                      <span>10,000 points</span>
+                      <span>Updated: May 1, 2023</span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         );
       case "orders":
         return (
           <div className="p-4">
             <h2 className="text-2xl font-semibold text-charcoal mb-6">Orders History</h2>
-            <p className="text-gray-500 mb-6">Track all your dataset orders in one place.</p>
-            <Card className="bg-white p-6 mb-4 border border-gray-100">
-              <div className="text-lg font-medium text-charcoal mb-2">Orders tab content</div>
-              <p className="text-gray-500">Coming soon: complete order history and tracking.</p>
+            <p className="text-charcoal mb-6">Track all your dataset orders in one place.</p>
+            
+            {/* Order filters */}
+            <div className="bg-warm-cream p-4 rounded-lg mb-6 flex flex-wrap gap-4">
+              <Button className="bg-bright-orange hover:bg-deep-orange text-white">All Orders</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">Processing</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">Completed</Button>
+              <Button variant="outline" className="border-bright-orange text-bright-orange hover:bg-warm-cream">Cancelled</Button>
+            </div>
+            
+            <Card className="bg-white border border-gray-100 overflow-hidden mb-8">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Order ID</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Dataset</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Date</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Status</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Amount</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {[1, 2, 3, 4, 5].map((item) => (
+                      <tr key={item} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-charcoal">ORD-2023-{1000 + item}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-charcoal">Custom Financial Dataset</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-charcoal">May {item}, 2023</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            Completed
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-charcoal">$4,000.00</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button className="text-bright-orange hover:text-deep-orange">View Details</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Card>
           </div>
         );
@@ -330,21 +498,148 @@ const Dashboard = () => {
         return (
           <div className="p-4">
             <h2 className="text-2xl font-semibold text-charcoal mb-6">Compliance Center</h2>
-            <p className="text-gray-500 mb-6">Monitor and maintain regulatory compliance for all your datasets.</p>
-            <Card className="bg-white p-6 mb-4 border border-gray-100">
-              <div className="text-lg font-medium text-charcoal mb-2">Compliance tab content</div>
-              <p className="text-gray-500">Coming soon: compliance monitoring dashboard.</p>
-            </Card>
+            <p className="text-charcoal mb-6">Monitor and maintain regulatory compliance for all your datasets.</p>
+            
+            {/* Compliance score card */}
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-charcoal">Overall Compliance Score</h3>
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium">Excellent</span>
+              </div>
+              
+              <div className="mb-6">
+                <div className="flex justify-between mb-2">
+                  <span className="text-charcoal font-medium">97% Compliant</span>
+                  <span className="text-charcoal">Updated: Today at 9:42 AM</span>
+                </div>
+                <Progress value={97} className="h-3 bg-gray-100" indicatorClassName="bg-success-green" />
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-warm-cream p-4 rounded-lg">
+                  <h4 className="font-medium text-charcoal mb-1">GDPR Compliance</h4>
+                  <Progress value={100} className="h-2 bg-white" indicatorClassName="bg-success-green" />
+                  <p className="text-sm text-charcoal mt-2">All requirements met</p>
+                </div>
+                
+                <div className="bg-warm-cream p-4 rounded-lg">
+                  <h4 className="font-medium text-charcoal mb-1">CCPA Compliance</h4>
+                  <Progress value={95} className="h-2 bg-white" indicatorClassName="bg-bright-orange" />
+                  <p className="text-sm text-charcoal mt-2">1 issue needs attention</p>
+                </div>
+                
+                <div className="bg-warm-cream p-4 rounded-lg">
+                  <h4 className="font-medium text-charcoal mb-1">Data Protection</h4>
+                  <Progress value={98} className="h-2 bg-white" indicatorClassName="bg-success-green" />
+                  <p className="text-sm text-charcoal mt-2">All security measures in place</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="bg-white p-6 border border-gray-100">
+                <h3 className="font-semibold text-charcoal mb-4">Recent Compliance Audits</h3>
+                <ul className="divide-y divide-gray-100">
+                  {[1, 2, 3].map((item) => (
+                    <li key={item} className="py-3">
+                      <div className="flex justify-between">
+                        <span className="text-charcoal font-medium">Quarterly Data Audit</span>
+                        <span className="text-charcoal">Apr {10 + item}, 2023</span>
+                      </div>
+                      <p className="text-sm text-charcoal">Passed with 98% compliance score</p>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+              
+              <Card className="bg-white p-6 border border-gray-100">
+                <h3 className="font-semibold text-charcoal mb-4">Compliance Documentation</h3>
+                <ul className="divide-y divide-gray-100">
+                  {['Data Processing Agreement', 'Privacy Policy', 'GDPR Certification', 'Data Retention Policy'].map((item, i) => (
+                    <li key={i} className="py-3 flex justify-between items-center">
+                      <span className="text-charcoal">{item}</span>
+                      <button className="text-bright-orange hover:text-deep-orange font-medium text-sm">Download</button>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
           </div>
         );
       case "billing":
         return (
           <div className="p-4">
             <h2 className="text-2xl font-semibold text-charcoal mb-6">Billing & Subscription</h2>
-            <p className="text-gray-500 mb-6">Manage your plan, view invoices, and update payment information.</p>
-            <Card className="bg-white p-6 mb-4 border border-gray-100">
-              <div className="text-lg font-medium text-charcoal mb-2">Billing tab content</div>
-              <p className="text-gray-500">Coming soon: subscription management interface.</p>
+            <p className="text-charcoal mb-6">Manage your plan, view invoices, and update payment information.</p>
+            
+            <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                  <h3 className="font-semibold text-xl text-charcoal">Current Plan: Enterprise</h3>
+                  <p className="text-charcoal">Your subscription renews on June 15, 2023</p>
+                </div>
+                <Button className="mt-4 md:mt-0 bg-bright-orange hover:bg-deep-orange text-white">Manage Subscription</Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-warm-cream rounded-lg p-4">
+                  <p className="text-sm text-charcoal mb-1">Monthly Fee</p>
+                  <p className="text-2xl font-bold text-charcoal">$4,000.00</p>
+                </div>
+                
+                <div className="bg-warm-cream rounded-lg p-4">
+                  <p className="text-sm text-charcoal mb-1">Next Invoice</p>
+                  <p className="text-2xl font-bold text-charcoal">June 15, 2023</p>
+                </div>
+                
+                <div className="bg-warm-cream rounded-lg p-4">
+                  <p className="text-sm text-charcoal mb-1">Payment Method</p>
+                  <p className="text-lg font-medium text-charcoal flex items-center">
+                    <i className="fas fa-credit-card mr-2 text-bright-orange"></i>
+                    Visa ending in 4242
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <Card className="bg-white border border-gray-100 overflow-hidden mb-8">
+              <div className="px-6 py-4 border-b border-gray-100">
+                <h3 className="font-semibold text-charcoal">Recent Invoices</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Invoice #</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Date</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Amount</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Status</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-charcoal uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {[1, 2, 3, 4, 5].map((item) => (
+                      <tr key={item} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-charcoal">INV-2023-{1000 + item}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-charcoal">May {item}, 2023</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-charcoal">$4,000.00</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            Paid
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button className="text-bright-orange hover:text-deep-orange">Download PDF</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Card>
           </div>
         );
@@ -354,12 +649,31 @@ const Dashboard = () => {
   };
 
   return (
-    <section className="py-12 bg-white min-h-screen">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <Link href="/" className="text-charcoal hover:text-bright-orange flex items-center">
+              <i className="fas fa-arrow-left mr-2"></i> 
+              Back to Homepage
+            </Link>
+            <h1 className="text-3xl font-bold text-charcoal mt-2">Client Dashboard</h1>
+          </div>
+          <div className="hidden md:flex items-center">
+            <div className="mr-4 text-right">
+              <div className="text-charcoal">Welcome back,</div>
+              <div className="font-semibold text-bright-orange">Vatsal Patel</div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-warm-cream overflow-hidden flex items-center justify-center">
+              <i className="fas fa-user text-bright-orange"></i>
+            </div>
+          </div>
+        </div>
+        
         <Card className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Sidebar Navigation */}
-            <div className="hidden md:block bg-charcoal text-white w-64 p-6">
+            <div className="md:w-64 bg-charcoal text-white p-6">
               <div className="mb-8">
                 <div className="text-xl font-poppins font-bold">
                   Specifi<span className="text-bright-orange">AI</span>
@@ -375,8 +689,8 @@ const Dashboard = () => {
                         onClick={() => setActiveTab(item.id)}
                         className={`flex items-center w-full py-2 px-4 rounded-md ${
                           activeTab === item.id
-                            ? "bg-bright-orange bg-opacity-20 text-white font-medium"
-                            : "text-gray-300 hover:bg-bright-orange hover:bg-opacity-10"
+                            ? "bg-bright-orange text-white font-medium"
+                            : "text-gray-300 hover:bg-bright-orange hover:bg-opacity-20 hover:text-white"
                         } transition duration-150`}
                       >
                         <i className={`fas ${item.icon} mr-3`}></i>
@@ -387,13 +701,23 @@ const Dashboard = () => {
                 </ul>
               </nav>
               
-              <div className="mt-auto pt-16">
-                <div className="py-4 border-t border-gray-800">
-                  <button className="flex items-center text-gray-300 hover:text-white transition duration-150">
-                    <i className="fas fa-sign-out-alt mr-3"></i>
-                    <span>Logout</span>
-                  </button>
+              <div className="mt-8 pt-8 border-t border-gray-800">
+                <div className="flex items-center justify-between text-gray-400 text-sm mb-2">
+                  <span>Notifications</span>
+                  <span className="bg-bright-orange text-white px-2 py-0.5 rounded-full text-xs">{notifications}</span>
                 </div>
+                <div className="flex items-center justify-between text-gray-400 text-sm">
+                  <span>System Status</span>
+                  <span className="flex items-center text-green-400">
+                    <span className="h-2 w-2 rounded-full bg-green-400 mr-1 animate-pulse"></span>
+                    Online
+                  </span>
+                </div>
+                
+                <button className="flex items-center text-gray-300 hover:text-white transition duration-150 mt-8 w-full">
+                  <i className="fas fa-sign-out-alt mr-3"></i>
+                  <span>Logout</span>
+                </button>
               </div>
             </div>
             
@@ -411,17 +735,16 @@ const Dashboard = () => {
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  <button className="text-gray-500 hover:text-bright-orange transition duration-150 relative">
+                  <button className="text-charcoal hover:text-bright-orange transition duration-150 relative">
                     <i className="far fa-bell text-xl"></i>
-                    <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-bright-orange text-xs text-white flex items-center justify-center">3</span>
+                    <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-bright-orange text-xs text-white flex items-center justify-center">{notifications}</span>
                   </button>
-                  <div className="flex items-center space-x-3">
-                    <div className="h-8 w-8 rounded-full bg-light-orange overflow-hidden flex items-center justify-center">
+                  <button className="text-charcoal hover:text-bright-orange transition duration-150">
+                    <i className="fas fa-cog text-xl"></i>
+                  </button>
+                  <div className="md:hidden flex items-center">
+                    <div className="h-8 w-8 rounded-full bg-warm-cream overflow-hidden flex items-center justify-center">
                       <i className="fas fa-user text-bright-orange"></i>
-                    </div>
-                    <div className="hidden md:block">
-                      <div className="text-sm font-medium text-charcoal">Sarah Chen</div>
-                      <div className="text-xs text-gray-500">Administrator</div>
                     </div>
                   </div>
                 </div>
@@ -435,7 +758,7 @@ const Dashboard = () => {
           </div>
         </Card>
       </div>
-    </section>
+    </div>
   );
 };
 

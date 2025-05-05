@@ -73,6 +73,19 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-poppins font-semibold;
   }
+
+  /* Fix text contrast issues */
+  .text-gray-500, .text-gray-400, .text-gray-300 {
+    @apply text-charcoal;
+  }
+
+  .bg-white .text-gray-500, .bg-white .text-gray-400, .bg-white .text-gray-300 {
+    @apply text-charcoal;
+  }
+
+  .bg-warm-cream .text-gray-500, .bg-warm-cream .text-gray-400, .bg-warm-cream .text-gray-300 {
+    @apply text-charcoal;
+  }
 }
 
 @layer utilities {
@@ -112,6 +125,18 @@
     background-color: #22C55E;
   }
 
+  .bg-charcoal {
+    background-color: #1F2937;
+  }
+
+  .border-bright-orange {
+    border-color: #F97316;
+  }
+
+  .border-charcoal {
+    border-color: #1F2937;
+  }
+
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
@@ -130,5 +155,36 @@
 
   .bg-gradient-hero {
     background: linear-gradient(to right, #FDEAD7, #ffffff);
+  }
+
+  /* Live elements animation */
+  @keyframes custom-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .animate-pulse {
+    animation: custom-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Product card colors */
+  .product-dataforge {
+    --product-bg: #FFF0E5;
+    --product-color: #EA580C;
+  }
+
+  .product-atlas {
+    --product-bg: #FFE8CC;
+    --product-color: #D97706;
+  }
+
+  .product-prism {
+    --product-bg: #FFEDD5;
+    --product-color: #C2410C;
+  }
+
+  .product-sentinel {
+    --product-bg: #FEF2F2;
+    --product-color: #B91C1C;
   }
 }

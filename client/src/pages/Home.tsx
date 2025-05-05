@@ -37,29 +37,29 @@ const Home = () => {
       {/* Partner Logos Section */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm uppercase tracking-wider text-gray-500 font-medium mb-8">
+          <p className="text-center text-sm uppercase tracking-wider text-charcoal font-medium mb-8">
             Trusted by AI Innovators
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 items-center justify-items-center">
-            {/* Partner Logos (grayscale) */}
-            <div className="h-12 w-32 opacity-50">
+            {/* Partner Logos (using a more visible styling) */}
+            <div className="h-12 w-32">
               <div className="h-full flex items-center justify-center">
-                <div className="font-poppins font-bold text-gray-400 text-xl">ACME AI</div>
+                <div className="font-poppins font-bold text-charcoal text-xl">ACME AI</div>
               </div>
             </div>
-            <div className="h-12 w-32 opacity-50">
+            <div className="h-12 w-32">
               <div className="h-full flex items-center justify-center">
-                <div className="font-poppins font-bold text-gray-400 text-xl">NeuralCo</div>
+                <div className="font-poppins font-bold text-charcoal text-xl">NeuralCo</div>
               </div>
             </div>
-            <div className="h-12 w-32 opacity-50">
+            <div className="h-12 w-32">
               <div className="h-full flex items-center justify-center">
-                <div className="font-poppins font-bold text-gray-400 text-xl">DataSphere</div>
+                <div className="font-poppins font-bold text-charcoal text-xl">DataSphere</div>
               </div>
             </div>
-            <div className="h-12 w-32 opacity-50">
+            <div className="h-12 w-32">
               <div className="h-full flex items-center justify-center">
-                <div className="font-poppins font-bold text-gray-400 text-xl">CogniTech</div>
+                <div className="font-poppins font-bold text-charcoal text-xl">CogniTech</div>
               </div>
             </div>
           </div>
@@ -74,47 +74,59 @@ const Home = () => {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* DataForge */}
-            <Card className="bg-white hover:shadow-md transition-shadow duration-300 p-6 flex flex-col items-center text-center">
-              <div className="h-16 w-16 rounded-full bg-light-orange flex items-center justify-center mb-4">
-                <i className="fas fa-hammer text-bright-orange text-2xl"></i>
+            <Card className="bg-white hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center h-full">
+              <div className="h-16 w-16 rounded-full bg-[#FFF0E5] flex items-center justify-center mb-4 shadow-md">
+                <i className="fas fa-hammer text-deep-orange text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold text-charcoal mb-2">DataForge™</h3>
               <p className="text-charcoal">
                 Custom-built datasets tailored to your specific model requirements with legal compliance built-in.
               </p>
+              <div className="mt-4">
+                <Link href="/products" className="text-bright-orange hover:text-deep-orange font-medium">Learn More →</Link>
+              </div>
             </Card>
             
             {/* Atlas Library */}
-            <Card className="bg-white hover:shadow-md transition-shadow duration-300 p-6 flex flex-col items-center text-center">
-              <div className="h-16 w-16 rounded-full bg-light-orange flex items-center justify-center mb-4">
-                <i className="fas fa-book-atlas text-bright-orange text-2xl"></i>
+            <Card className="bg-white hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center h-full">
+              <div className="h-16 w-16 rounded-full bg-[#FFE8CC] flex items-center justify-center mb-4 shadow-md">
+                <i className="fas fa-book-atlas text-[#D97706] text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold text-charcoal mb-2">Atlas Library™</h3>
               <p className="text-charcoal">
                 Pre-labeled, verified datasets covering common AI training scenarios across multiple domains.
               </p>
+              <div className="mt-4">
+                <Link href="/products" className="text-bright-orange hover:text-deep-orange font-medium">Learn More →</Link>
+              </div>
             </Card>
             
             {/* Prism Packs */}
-            <Card className="bg-white hover:shadow-md transition-shadow duration-300 p-6 flex flex-col items-center text-center">
-              <div className="h-16 w-16 rounded-full bg-light-orange flex items-center justify-center mb-4">
-                <i className="fas fa-cube text-bright-orange text-2xl"></i>
+            <Card className="bg-white hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center h-full">
+              <div className="h-16 w-16 rounded-full bg-[#FFEDD5] flex items-center justify-center mb-4 shadow-md">
+                <i className="fas fa-cube text-[#C2410C] text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold text-charcoal mb-2">Prism Packs™</h3>
               <p className="text-charcoal">
                 Diverse, balanced datasets ensuring your models perform equally well across demographics and contexts.
               </p>
+              <div className="mt-4">
+                <Link href="/products" className="text-bright-orange hover:text-deep-orange font-medium">Learn More →</Link>
+              </div>
             </Card>
             
             {/* Sentinel Audit */}
-            <Card className="bg-white hover:shadow-md transition-shadow duration-300 p-6 flex flex-col items-center text-center">
-              <div className="h-16 w-16 rounded-full bg-light-orange flex items-center justify-center mb-4">
-                <i className="fas fa-shield-alt text-bright-orange text-2xl"></i>
+            <Card className="bg-white hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center h-full">
+              <div className="h-16 w-16 rounded-full bg-[#FEF2F2] flex items-center justify-center mb-4 shadow-md">
+                <i className="fas fa-shield-alt text-[#B91C1C] text-2xl"></i>
               </div>
               <h3 className="text-xl font-semibold text-charcoal mb-2">Sentinel Audit™</h3>
               <p className="text-charcoal">
                 Comprehensive evaluation tools to assess your existing datasets for bias, quality and compliance issues.
               </p>
+              <div className="mt-4">
+                <Link href="/products" className="text-bright-orange hover:text-deep-orange font-medium">Learn More →</Link>
+              </div>
             </Card>
           </div>
         </div>

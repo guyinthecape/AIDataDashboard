@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
 
-// Dashboard layout with main site header/footer
+// Dashboard as a standalone page without the main site header/footer
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -18,10 +18,12 @@ const Dashboard = () => {
   ]);
   const [notifications, setNotifications] = useState(3);
   const [liveMetric, setLiveMetric] = useState(12000);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [recentActivity, setRecentActivity] = useState([
-    { action: "Downloaded", item: "HealthcareTerms-v2", time: "2 hours ago" },
-    { action: "Uploaded", item: "Custom annotations", time: "1 day ago" },
-    { action: "Ordered", item: "FinTech-Queries dataset", time: "3 days ago" },
+    { action: "Downloaded", item: "Financial Services NLP Dataset", time: "2 hours ago" },
+    { action: "Uploaded", item: "Healthcare Sentiment Labels", time: "1 day ago" },
+    { action: "Ordered", item: "Retail Customer Reviews Dataset", time: "3 days ago" },
     { action: "Renewed", item: "Enterprise subscription", time: "1 week ago" }
   ]);
 
@@ -649,114 +651,206 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <Link href="/" className="text-charcoal hover:text-bright-orange flex items-center">
-              <i className="fas fa-arrow-left mr-2"></i> 
-              Back to Homepage
+    <div className="min-h-screen bg-[#F8F9FA]">
+      {/* Top app bar for dashboard */}
+      <header className="bg-white border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-10">
+        <div className="flex items-center justify-between px-6 py-3">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center mr-6 group">
+              <div className="h-10 w-10 rounded-full bg-bright-orange flex items-center justify-center mr-2 transform transition-transform duration-300 group-hover:scale-110">
+                <span className="text-white text-xl font-bold">S</span>
+              </div>
+              <div className="text-xl font-poppins font-bold transform transition-transform duration-300 group-hover:translate-x-1">
+                Specifi<span className="text-bright-orange">AI</span>
+                <span className="text-xs bg-warm-cream text-charcoal px-2 py-0.5 rounded ml-2">Dashboard</span>
+              </div>
             </Link>
-            <h1 className="text-3xl font-bold text-charcoal mt-2">Client Dashboard</h1>
           </div>
-          <div className="hidden md:flex items-center">
-            <div className="mr-4 text-right">
-              <div className="text-charcoal">Welcome back,</div>
-              <div className="font-semibold text-bright-orange">Vatsal Patel</div>
+          
+          <div className="flex items-center space-x-3">
+            <Link href="/" className="text-charcoal hover:text-bright-orange px-3 py-1 rounded-md hover:bg-warm-cream transition duration-200">
+              <i className="fas fa-home mr-1"></i> Home
+            </Link>
+            
+            <div className="relative">
+              <button 
+                onClick={() => setShowNotifications(!showNotifications)} 
+                className="text-charcoal hover:text-bright-orange transition duration-150 relative h-10 w-10 rounded-full flex items-center justify-center hover:bg-warm-cream"
+              >
+                <i className="far fa-bell text-xl"></i>
+                {notifications > 0 && (
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-bright-orange text-xs text-white flex items-center justify-center">{notifications}</span>
+                )}
+              </button>
+              
+              {showNotifications && (
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-200 animate-in fade-in slide-in-from-top-5 duration-300">
+                  <div className="px-4 py-2 border-b border-gray-100">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold text-charcoal">Notifications</h3>
+                      <span className="text-xs px-2 py-1 bg-warm-cream text-charcoal rounded-full">{notifications} new</span>
+                    </div>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    <div className="px-4 py-3 hover:bg-warm-cream border-l-4 border-bright-orange">
+                      <p className="text-sm font-medium text-charcoal">New dataset available</p>
+                      <p className="text-xs text-charcoal mt-1">Financial Services NLP Dataset is ready for download</p>
+                      <p className="text-xs text-bright-orange mt-1">5 minutes ago</p>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-warm-cream border-l-4 border-bright-orange">
+                      <p className="text-sm font-medium text-charcoal">System Maintenance</p>
+                      <p className="text-xs text-charcoal mt-1">Scheduled maintenance on May 15th at 2:00 AM UTC</p>
+                      <p className="text-xs text-bright-orange mt-1">2 hours ago</p>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-warm-cream">
+                      <p className="text-sm font-medium text-charcoal">Order Completed</p>
+                      <p className="text-xs text-charcoal mt-1">Your order #1245 has been completed</p>
+                      <p className="text-xs text-bright-orange mt-1">Yesterday</p>
+                    </div>
+                  </div>
+                  <div className="px-4 py-2 border-t border-gray-100">
+                    <button className="text-xs text-bright-orange hover:text-deep-orange w-full text-center">
+                      View all notifications
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="h-10 w-10 rounded-full bg-warm-cream overflow-hidden flex items-center justify-center">
-              <i className="fas fa-user text-bright-orange"></i>
+            
+            <div className="relative">
+              <button 
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center text-charcoal hover:text-bright-orange transition duration-150 focus:outline-none hover:bg-warm-cream rounded-full pl-2 pr-3 py-1"
+              >
+                <div className="h-8 w-8 rounded-full bg-light-orange overflow-hidden flex items-center justify-center">
+                  <i className="fas fa-user-alt text-bright-orange"></i>
+                </div>
+                <span className="ml-2 font-medium hidden sm:block">Vatsal Patel</span>
+                <i className="fas fa-chevron-down text-xs ml-1 hidden sm:block"></i>
+              </button>
+              
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-200 animate-in fade-in slide-in-from-top-5 duration-300">
+                  <div className="px-4 py-2 border-b border-gray-100">
+                    <p className="text-sm font-medium text-charcoal">Vatsal Patel</p>
+                    <p className="text-xs text-charcoal">CEO & Founder</p>
+                  </div>
+                  <div className="py-1">
+                    <button className="px-4 py-2 text-sm text-charcoal hover:bg-warm-cream w-full text-left flex items-center">
+                      <i className="fas fa-user-circle mr-2 text-bright-orange"></i> Profile
+                    </button>
+                    <button className="px-4 py-2 text-sm text-charcoal hover:bg-warm-cream w-full text-left flex items-center">
+                      <i className="fas fa-cog mr-2 text-bright-orange"></i> Settings
+                    </button>
+                    <button className="px-4 py-2 text-sm text-charcoal hover:bg-warm-cream w-full text-left flex items-center">
+                      <i className="fas fa-key mr-2 text-bright-orange"></i> API Keys
+                    </button>
+                  </div>
+                  <div className="py-1 border-t border-gray-100">
+                    <Link href="/" className="px-4 py-2 text-sm text-charcoal hover:bg-warm-cream w-full text-left flex items-center">
+                      <i className="fas fa-sign-out-alt mr-2 text-bright-orange"></i> Logout
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-        
-        <Card className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="flex flex-col md:flex-row">
-            {/* Sidebar Navigation */}
-            <div className="md:w-64 bg-charcoal text-white p-6">
-              <div className="mb-8">
-                <div className="text-xl font-poppins font-bold">
-                  Specifi<span className="text-bright-orange">AI</span>
-                </div>
-                <div className="text-xs text-gray-400">Dashboard</div>
-              </div>
+      </header>
+      
+      <div className="pt-16 flex h-screen">
+        {/* Sidebar Navigation */}
+        <aside className="w-64 bg-charcoal fixed left-0 top-16 bottom-0 overflow-y-auto hidden md:block">
+          <div className="p-6">            
+            <nav>
+              <h3 className="text-white font-medium text-xs uppercase tracking-wider mb-3">Main Navigation</h3>
+              <ul className="space-y-1">
+                {sidebarItems.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => setActiveTab(item.id)}
+                      className={`flex items-center w-full py-2.5 px-4 rounded-md ${
+                        activeTab === item.id
+                          ? "bg-bright-orange text-white font-medium"
+                          : "text-white hover:bg-white/10 hover:text-white"
+                      } transition-all duration-200 hover:translate-x-1`}
+                    >
+                      <i className={`fas ${item.icon} mr-3 text-lg ${activeTab === item.id ? 'text-white' : 'text-bright-orange'}`}></i>
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
               
-              <nav>
-                <ul className="space-y-2">
-                  {sidebarItems.map((item) => (
-                    <li key={item.id}>
-                      <button
-                        onClick={() => setActiveTab(item.id)}
-                        className={`flex items-center w-full py-2 px-4 rounded-md ${
-                          activeTab === item.id
-                            ? "bg-bright-orange text-white font-medium"
-                            : "text-gray-300 hover:bg-bright-orange hover:bg-opacity-20 hover:text-white"
-                        } transition duration-150`}
-                      >
-                        <i className={`fas ${item.icon} mr-3`}></i>
-                        <span>{item.label}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-              
-              <div className="mt-8 pt-8 border-t border-gray-800">
-                <div className="flex items-center justify-between text-gray-400 text-sm mb-2">
-                  <span>Notifications</span>
-                  <span className="bg-bright-orange text-white px-2 py-0.5 rounded-full text-xs">{notifications}</span>
-                </div>
-                <div className="flex items-center justify-between text-gray-400 text-sm">
+              <h3 className="text-white font-medium text-xs uppercase tracking-wider mt-6 mb-3">Support</h3>
+              <ul className="space-y-1">
+                <li>
+                  <button className="flex items-center w-full py-2.5 px-4 rounded-md text-white hover:bg-white/10 transition-all duration-200 hover:translate-x-1">
+                    <i className="fas fa-question-circle mr-3 text-lg text-bright-orange"></i>
+                    <span>Help Center</span>
+                  </button>
+                </li>
+                <li>
+                  <button className="flex items-center w-full py-2.5 px-4 rounded-md text-white hover:bg-white/10 transition-all duration-200 hover:translate-x-1">
+                    <i className="fas fa-book mr-3 text-lg text-bright-orange"></i>
+                    <span>Documentation</span>
+                  </button>
+                </li>
+                <li>
+                  <button className="flex items-center w-full py-2.5 px-4 rounded-md text-white hover:bg-white/10 transition-all duration-200 hover:translate-x-1">
+                    <i className="fas fa-headset mr-3 text-lg text-bright-orange"></i>
+                    <span>Contact Support</span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+            
+            <div className="mt-8 pt-8 border-t border-gray-700">
+              <div className="bg-white/10 rounded-lg p-4">
+                <div className="flex items-center justify-between text-white text-sm mb-2">
                   <span>System Status</span>
-                  <span className="flex items-center text-green-400">
-                    <span className="h-2 w-2 rounded-full bg-green-400 mr-1 animate-pulse"></span>
+                  <span className="flex items-center text-success-green">
+                    <span className="h-2 w-2 rounded-full bg-success-green mr-1 animate-pulse"></span>
                     Online
                   </span>
                 </div>
-                
-                <button className="flex items-center text-gray-300 hover:text-white transition duration-150 mt-8 w-full">
-                  <i className="fas fa-sign-out-alt mr-3"></i>
-                  <span>Logout</span>
-                </button>
-              </div>
-            </div>
-            
-            {/* Main Dashboard Content */}
-            <div className="flex-1">
-              {/* Top Navigation */}
-              <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-                {/* Mobile menu button */}
-                <button className="md:hidden text-charcoal hover:text-bright-orange">
-                  <i className="fas fa-bars text-xl"></i>
-                </button>
-                
-                <div className="md:hidden text-xl font-poppins font-bold">
-                  Specifi<span className="text-bright-orange">AI</span>
+                <div className="flex items-center justify-between text-white text-sm">
+                  <span>Storage Usage</span>
+                  <span>68%</span>
                 </div>
-                
-                <div className="flex items-center space-x-4">
-                  <button className="text-charcoal hover:text-bright-orange transition duration-150 relative">
-                    <i className="far fa-bell text-xl"></i>
-                    <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-bright-orange text-xs text-white flex items-center justify-center">{notifications}</span>
-                  </button>
-                  <button className="text-charcoal hover:text-bright-orange transition duration-150">
-                    <i className="fas fa-cog text-xl"></i>
-                  </button>
-                  <div className="md:hidden flex items-center">
-                    <div className="h-8 w-8 rounded-full bg-warm-cream overflow-hidden flex items-center justify-center">
-                      <i className="fas fa-user text-bright-orange"></i>
-                    </div>
-                  </div>
+                <div className="mt-1 h-1.5 w-full bg-white/20 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-bright-orange rounded-full transition-all duration-1000" 
+                    style={{ width: '68%' }}
+                  ></div>
                 </div>
-              </div>
-              
-              {/* Dashboard Content - Different content based on active tab */}
-              <div className="p-6">
-                {renderTabContent()}
               </div>
             </div>
           </div>
-        </Card>
+        </aside>
+        
+        {/* Mobile Navigation Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-charcoal text-white md:hidden z-10 px-1 py-3 border-t border-gray-700">
+          <div className="flex justify-around">
+            {sidebarItems.slice(0, 5).map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex flex-col items-center justify-center ${
+                  activeTab === item.id ? "text-bright-orange" : "text-white"
+                }`}
+              >
+                <i className={`fas ${item.icon} text-lg`}></i>
+                <span className="text-xs mt-1">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* Main Dashboard Content */}
+        <main className="flex-1 ml-0 md:ml-64 p-6 pb-20 md:pb-6 bg-[#F8F9FA] min-h-full">
+          {renderTabContent()}
+        </main>
       </div>
     </div>
   );

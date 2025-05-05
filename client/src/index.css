@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Base colors */
+  --background: 240 33% 99%;
+  --foreground: 240 10% 4%;
+  
+  /* Accent colors */
+  --muted: 240 33% 96%;
+  --muted-foreground: 240 5% 65%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 4%;
+  --border: 240 6% 90%;
+  --input: 240 6% 90%;
+  
+  /* Brand colors */
+  --primary: 238 70% 37%; /* Midnight Indigo: #181B3D */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 246 69% 95%; /* Soft Lilac: #E2E4F6 */
+  --secondary-foreground: 238 70% 37%;
+  --accent: 247 100% 68%; /* SpecifiAI Purple: #645BFF */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 238 70% 37%;
+  --radius: 0.5rem;
+  
+  /* Custom colors */
+  --success: 162 100% 36%; /* Success/Compliance Green: #00B88D */
+  --deep-charcoal: 0 0% 13%; /* Deep Charcoal: #222222 */
+  --off-white: 240 33% 99%; /* Off-white: #F9F9FB */
+}
+
+.dark {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --popover: 240 10% 4%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 4%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --primary: 238 70% 37%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 246 69% 95%;
+  --secondary-foreground: 238 70% 37%;
+  --accent: 247 100% 68%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 5% 84%;
+  --success: 162 100% 36%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-off-white text-deep-charcoal font-inter antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-semibold;
+  }
+}
+
+@layer utilities {
+  .bg-midnight-indigo {
+    background-color: #181B3D;
+  }
+  
+  .bg-soft-lilac {
+    background-color: #E2E4F6;
+  }
+  
+  .bg-specifi-purple {
+    background-color: #645BFF;
+  }
+  
+  .text-midnight-indigo {
+    color: #181B3D;
+  }
+  
+  .text-specifi-purple {
+    color: #645BFF;
+  }
+  
+  .text-deep-charcoal {
+    color: #222222;
+  }
+  
+  .bg-off-white {
+    background-color: #F9F9FB;
+  }
+  
+  .text-success-green {
+    color: #00B88D;
+  }
+  
+  .bg-success-green {
+    background-color: #00B88D;
+  }
+
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(to right, #E2E4F6, #ffffff);
+  }
+}

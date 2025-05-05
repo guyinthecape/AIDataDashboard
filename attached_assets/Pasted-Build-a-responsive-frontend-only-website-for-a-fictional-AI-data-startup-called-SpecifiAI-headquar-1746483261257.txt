@@ -1,0 +1,120 @@
+Build a responsive, frontend-only website for a fictional AI data startup called SpecifiAI, headquartered in New York City. The company provides legally compliant training datasets to AI developers, especially startups.
+
+This is a presentation prototype only — do not include any backend functionality. All forms, buttons, and dashboards should be non-functional and use fake/mock data.
+
+The site should simulate a clean, modern B2B SaaS startup experience, and the design must visually match the style and branding used in SpecifiAI’s pitch deck.
+
+⸻
+
+✅ Pages to Include:
+
+1. Home (Landing Page)
+	•	Full-width hero section with background in soft light blue or pale lilac tone
+	•	Large tagline: “Powering Ethical AI with Reliable Data”
+	•	2–3 line intro paragraph underneath
+	•	Section with 4 fake partner logos (use grayscale or faint brand overlays)
+	•	Product highlight cards (subtle shadows, modern icons):
+	•	DataForge™
+	•	Atlas Library™
+	•	Prism Packs™
+	•	Sentinel Audit™
+	•	2 CTA buttons:
+	•	“Request Demo”
+	•	“View Pricing”
+	•	Footer with:
+	•	Navigation links
+	•	Email capture field (non-functional)
+	•	Social icon placeholders (LinkedIn, Twitter)
+
+⸻
+
+2. Product Page
+	•	2-column layout for each product:
+	•	Left: icon/graphic
+	•	Right: product name, short tagline, 1-paragraph description
+	•	Add “Coming Soon” product block for SpeciCore™ (greyed out)
+
+⸻
+
+3. Pricing Page
+	•	Pricing cards for:
+	•	Ignite Plan (for Startups) — $4,000/month
+	•	Precision Plan (Custom Datasets) — $0.05 per labeled datapoint
+	•	Comparison table with 4 fake tiers:
+	•	LaunchPad – Hackathons & Students
+	•	Ignite – Startups
+	•	Momentum – Growth
+	•	Pinnacle – Enterprise
+	•	Table rows should include: API access, SLA, support level, audit tools, etc.
+
+⸻
+
+4. About Page
+	•	Mission in large text:
+“To make high-quality, ethical data accessible for every AI developer.”
+	•	Company details: NYC HQ, founded 2024
+	•	Team bios: 3 fake team members with avatars and brief titles
+
+⸻
+
+5. Contact Page
+	•	Form fields: Name, Email, Message (non-functional)
+	•	Static info:
+	•	contact@specifiai.com
+	•	45 W 27th Street, New York, NY
+	•	Embedded static Google Map frame
+	•	Newsletter sign-up placeholder
+
+⸻
+
+6. Compliance / Trust Center Page
+	•	Title: “Built-In Compliance You Can Prove”
+	•	5-block visual section with icons + text:
+	•	Data Cards
+	•	Audit Trails
+	•	Automated Scanning
+	•	Legal Review
+	•	External Audit Readiness
+	•	Include 3 compliance-style badges:
+	•	GDPR-Ready, PII-Safe, Audit-Certified
+
+⸻
+
+7. Dashboard (Mock Page)
+	•	Left sidebar nav: Overview, Datasets, Orders, Compliance, Billing
+	•	Top navbar with SpecifiAI logo and user avatar
+	•	Summary cards:
+	•	DataForge Orders: 3 Active
+	•	Dataset Usage: 12,000 Points
+	•	Compliance Score: 97%
+	•	Table with sample data:
+	•	EcomSentiment-GenZ | DataForge | Processing | 2 days | [Download]
+
+⸻
+
+🌐 VISUAL & DESIGN STYLE (match pitch deck aesthetic):
+
+🎨 Color Palette:
+	•	Primary: Midnight Indigo — #181B3D
+	•	Accent: Soft Lilac — #E2E4F6
+	•	CTA Highlight: SpecifiAI Purple — #645BFF
+	•	Text: Deep Charcoal — #222222
+	•	Background: Off-white — #F9F9FB
+	•	Success/Compliance Green (used sparingly): #00B88D
+
+🖋 Typography:
+	•	Headings: Poppins (semi-bold, spaced out slightly)
+	•	Body: Open Sans or Inter
+	•	Avoid serif fonts entirely — keep it sharp and clean
+
+🧱 UI Elements:
+	•	Use modern card layout for content blocks
+	•	Button style: Filled for primary CTAs, outlined for secondary (rounded corners, hover darken)
+	•	Light animation on hover (lift cards, fade icons)
+	•	Use icons for features like dataset, compliance, delivery status, etc.
+	•	Icons should be line-based and minimalist (no cartoon styles)
+
+📱 Responsive Design:
+	•	All pages must adjust fluidly across mobile, tablet, and desktop
+	•	Navigation menu should collapse into hamburger on mobile
+	•	Avoid horizontal scrolling at all costs

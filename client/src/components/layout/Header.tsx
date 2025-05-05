@@ -37,8 +37,8 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <div className="text-midnight-indigo font-poppins font-bold text-2xl">
-                Specifi<span className="text-specifi-purple">AI</span>
+              <div className="text-charcoal font-poppins font-bold text-2xl">
+                Specifi<span className="text-bright-orange">AI</span>
               </div>
             </Link>
           </div>
@@ -51,8 +51,8 @@ const Header = () => {
                 href={link.href}
                 className={`font-medium transition duration-150 ${
                   isActive(link.href)
-                    ? "text-specifi-purple"
-                    : "text-midnight-indigo hover:text-specifi-purple"
+                    ? "text-bright-orange"
+                    : "text-charcoal hover:text-deep-orange"
                 }`}
               >
                 {link.text}
@@ -65,13 +65,13 @@ const Header = () => {
               href="/dashboard"
               className={`font-medium transition duration-150 ${
                 isActive("/dashboard")
-                  ? "text-midnight-indigo"
-                  : "text-specifi-purple hover:text-midnight-indigo"
+                  ? "text-charcoal"
+                  : "text-bright-orange hover:text-deep-orange"
               }`}
             >
               Dashboard
             </Link>
-            <Button className="bg-specifi-purple hover:bg-opacity-90 transition duration-150">
+            <Button className="bg-bright-orange hover:bg-deep-orange transition duration-150">
               Request Demo
             </Button>
           </div>
@@ -80,7 +80,7 @@ const Header = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="text-midnight-indigo hover:text-specifi-purple focus:outline-none"
+              className="text-charcoal hover:text-bright-orange focus:outline-none"
               aria-label="Toggle menu"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,8 +100,8 @@ const Header = () => {
                 onClick={closeMenu}
                 className={`font-medium px-2 py-1 rounded-md transition duration-150 ${
                   isActive(link.href)
-                    ? "text-specifi-purple"
-                    : "text-midnight-indigo hover:text-specifi-purple"
+                    ? "text-bright-orange"
+                    : "text-charcoal hover:text-deep-orange"
                 }`}
               >
                 {link.text}
@@ -112,13 +112,13 @@ const Header = () => {
               onClick={closeMenu}
               className={`font-medium px-2 py-1 rounded-md transition duration-150 ${
                 isActive("/dashboard")
-                  ? "text-midnight-indigo"
-                  : "text-specifi-purple hover:bg-soft-lilac"
+                  ? "text-charcoal"
+                  : "text-bright-orange hover:bg-warm-cream"
               }`}
             >
               Dashboard
             </Link>
-            <Button className="bg-specifi-purple hover:bg-opacity-90 transition duration-150 w-full justify-center mt-2">
+            <Button className="bg-bright-orange hover:bg-deep-orange transition duration-150 w-full justify-center mt-2">
               Request Demo
             </Button>
           </div>

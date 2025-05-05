@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,58 +6,59 @@
 
 :root {
   /* Base colors */
-  --background: 240 33% 99%;
-  --foreground: 240 10% 4%;
+  --background: 0 0% 100%;
+  --foreground: 215 28% 17%;
   
   /* Accent colors */
-  --muted: 240 33% 96%;
-  --muted-foreground: 240 5% 65%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 215 16% 47%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 4%;
+  --popover-foreground: 215 28% 17%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 4%;
-  --border: 240 6% 90%;
-  --input: 240 6% 90%;
+  --card-foreground: 215 28% 17%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
   
-  /* Brand colors */
-  --primary: 238 70% 37%; /* Midnight Indigo: #181B3D */
+  /* Brand colors - Updated to Orange */
+  --primary: 24 94% 53%; /* Bright Orange: #F97316 */
   --primary-foreground: 0 0% 100%;
-  --secondary: 246 69% 95%; /* Soft Lilac: #E2E4F6 */
-  --secondary-foreground: 238 70% 37%;
-  --accent: 247 100% 68%; /* SpecifiAI Purple: #645BFF */
+  --secondary: 27 98% 72%; /* Peach/Light Orange: #FDBA74 */
+  --secondary-foreground: 215 28% 17%;
+  --accent: 24 94% 53%; /* Bright Orange: #F97316 */
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --ring: 238 70% 37%;
+  --ring: 24 94% 53%;
   --radius: 0.5rem;
   
   /* Custom colors */
-  --success: 162 100% 36%; /* Success/Compliance Green: #00B88D */
-  --deep-charcoal: 0 0% 13%; /* Deep Charcoal: #222222 */
-  --off-white: 240 33% 99%; /* Off-white: #F9F9FB */
+  --success: 142 76% 36%; /* Success Green: #22C55E */
+  --deep-charcoal: 215 28% 17%; /* Charcoal Gray: #1F2937 */
+  --warm-cream: 33 92% 91%; /* Warm Beige/Cream: #FDEAD7 */
+  --deep-orange: 24 91% 48%; /* Deep Orange: #EA580C */
 }
 
 .dark {
-  --background: 240 10% 4%;
+  --background: 215 28% 17%;
   --foreground: 0 0% 98%;
-  --muted: 240 4% 16%;
-  --muted-foreground: 240 5% 65%;
-  --popover: 240 10% 4%;
+  --muted: 215 25% 27%;
+  --muted-foreground: 215 16% 65%;
+  --popover: 215 28% 17%;
   --popover-foreground: 0 0% 98%;
-  --card: 240 10% 4%;
+  --card: 215 28% 17%;
   --card-foreground: 0 0% 98%;
-  --border: 240 4% 16%;
-  --input: 240 4% 16%;
-  --primary: 238 70% 37%;
+  --border: 215 25% 27%;
+  --input: 215 25% 27%;
+  --primary: 24 94% 53%;
   --primary-foreground: 0 0% 98%;
-  --secondary: 246 69% 95%;
-  --secondary-foreground: 238 70% 37%;
-  --accent: 247 100% 68%;
+  --secondary: 27 98% 72%;
+  --secondary-foreground: 215 28% 17%;
+  --accent: 24 94% 53%;
   --accent-foreground: 0 0% 98%;
   --destructive: 0 63% 31%;
   --destructive-foreground: 0 0% 98%;
-  --ring: 240 5% 84%;
-  --success: 162 100% 36%;
+  --ring: 24 94% 53%;
+  --success: 142 76% 36%;
 }
 
 @layer base {
@@ -66,7 +67,7 @@
   }
 
   body {
-    @apply bg-off-white text-deep-charcoal font-inter antialiased;
+    @apply bg-white text-charcoal font-inter antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -75,40 +76,40 @@
 }
 
 @layer utilities {
-  .bg-midnight-indigo {
-    background-color: #181B3D;
+  .bg-bright-orange {
+    background-color: #F97316;
   }
   
-  .bg-soft-lilac {
-    background-color: #E2E4F6;
+  .bg-light-orange {
+    background-color: #FDBA74;
   }
   
-  .bg-specifi-purple {
-    background-color: #645BFF;
+  .bg-deep-orange {
+    background-color: #EA580C;
   }
   
-  .text-midnight-indigo {
-    color: #181B3D;
+  .text-charcoal {
+    color: #1F2937;
   }
   
-  .text-specifi-purple {
-    color: #645BFF;
+  .text-bright-orange {
+    color: #F97316;
   }
   
-  .text-deep-charcoal {
-    color: #222222;
+  .text-deep-orange {
+    color: #EA580C;
   }
   
-  .bg-off-white {
-    background-color: #F9F9FB;
+  .bg-warm-cream {
+    background-color: #FDEAD7;
   }
   
   .text-success-green {
-    color: #00B88D;
+    color: #22C55E;
   }
   
   .bg-success-green {
-    background-color: #00B88D;
+    background-color: #22C55E;
   }
 
   .font-inter {
@@ -118,8 +119,16 @@
   .font-poppins {
     font-family: 'Poppins', sans-serif;
   }
+  
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .font-open-sans {
+    font-family: 'Open Sans', sans-serif;
+  }
 
   .bg-gradient-hero {
-    background: linear-gradient(to right, #E2E4F6, #ffffff);
+    background: linear-gradient(to right, #FDEAD7, #ffffff);
   }
 }

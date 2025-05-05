@@ -21,26 +21,26 @@ const PricingCard = ({
   ctaText: string;
   primary?: boolean;
 }) => (
-  <Card className={`bg-white rounded-lg shadow-md p-8 border-t-4 ${primary ? 'border-specifi-purple' : 'border-midnight-indigo'}`}>
-    <h3 className="text-2xl font-semibold text-midnight-indigo">{title}</h3>
-    <p className="text-specifi-purple font-medium mt-1">{subtitle}</p>
+  <Card className={`bg-white rounded-lg shadow-md p-8 border-t-4 ${primary ? 'border-bright-orange' : 'border-charcoal'} hover:shadow-lg transition-all duration-300`}>
+    <h3 className="text-2xl font-semibold text-charcoal">{title}</h3>
+    <p className="text-bright-orange font-medium mt-1">{subtitle}</p>
     <div className="mt-4 flex items-end">
-      <span className="text-4xl font-bold text-midnight-indigo">{price}</span>
-      <span className="text-deep-charcoal ml-2 mb-1">{unit}</span>
+      <span className="text-4xl font-bold text-charcoal">{price}</span>
+      <span className="text-charcoal ml-2 mb-1">{unit}</span>
     </div>
     <p className="mt-2 text-gray-500">{description}</p>
     <ul className="mt-6 space-y-3">
       {features.map((feature, index) => (
         <li key={index} className="flex items-start">
           <i className="fas fa-check text-success-green mt-1 mr-3"></i>
-          <span>{feature}</span>
+          <span className="text-charcoal">{feature}</span>
         </li>
       ))}
     </ul>
     <Button 
       className={`mt-8 w-full ${primary 
-        ? 'bg-specifi-purple hover:bg-opacity-90 text-white' 
-        : 'bg-white border border-specifi-purple text-specifi-purple hover:bg-soft-lilac'}`
+        ? 'bg-bright-orange hover:bg-deep-orange text-white' 
+        : 'bg-white border border-bright-orange text-bright-orange hover:bg-warm-cream'}`
       }
     >
       {ctaText}
@@ -80,11 +80,11 @@ const features = [
 
 const Pricing = () => {
   return (
-    <section className="py-20 bg-off-white">
+    <section className="py-20 bg-warm-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="text-3xl sm:text-4xl font-semibold text-midnight-indigo">Transparent Pricing</h1>
-          <p className="mt-4 text-lg text-deep-charcoal">Flexible options designed to scale with your needs</p>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-charcoal">Transparent Pricing</h1>
+          <p className="mt-4 text-lg text-charcoal">Flexible options designed to scale with your needs</p>
         </div>
 
         {/* Pricing Cards */}
@@ -126,13 +126,28 @@ const Pricing = () => {
           />
         </div>
 
+        {/* Enterprise CTA */}
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8 mb-16">
+          <div className="flex flex-col md:flex-row items-center">
+            <div className="md:w-2/3 mb-6 md:mb-0 md:pr-8">
+              <h3 className="text-2xl font-semibold text-charcoal">Need a custom enterprise solution?</h3>
+              <p className="mt-2 text-charcoal">Contact our enterprise sales team for a tailored package that meets your organization's specific data needs and compliance requirements.</p>
+            </div>
+            <div className="md:w-1/3 flex justify-center">
+              <Button className="bg-bright-orange hover:bg-deep-orange text-white w-full md:w-auto">
+                Request Enterprise Quote
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {/* Comparison Table */}
         <div className="mt-16 overflow-hidden">
-          <h3 className="text-2xl font-semibold text-midnight-indigo text-center mb-8">Plan Comparison</h3>
+          <h3 className="text-2xl font-semibold text-charcoal text-center mb-8">Plan Comparison</h3>
           <div className="overflow-x-auto shadow-md rounded-lg">
             <table className="min-w-full bg-white">
               <thead>
-                <tr className="bg-midnight-indigo text-white text-left">
+                <tr className="bg-charcoal text-white text-left">
                   <th className="py-4 px-6 font-semibold">Features</th>
                   {tiers.map((tier, index) => (
                     <th key={index} className="py-4 px-6 font-semibold">{tier}</th>
@@ -147,7 +162,7 @@ const Pricing = () => {
                   ))}
                 </tr>
                 {features.map((feature, rowIndex) => (
-                  <tr key={rowIndex} className={rowIndex % 2 === 1 ? "bg-off-white" : ""}>
+                  <tr key={rowIndex} className={rowIndex % 2 === 1 ? "bg-warm-cream bg-opacity-50" : ""}>
                     <td className="py-4 px-6 font-medium">{feature.name}</td>
                     {feature.values.map((value, colIndex) => (
                       <td key={colIndex} className="py-4 px-6">

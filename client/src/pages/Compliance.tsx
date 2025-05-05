@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const ComplianceBlock = ({ 
   icon, 
@@ -9,12 +10,12 @@ const ComplianceBlock = ({
   title: string; 
   description: string; 
 }) => (
-  <Card className="bg-white rounded-lg shadow-sm p-8 text-center">
-    <div className="h-16 w-16 rounded-full bg-soft-lilac flex items-center justify-center mx-auto mb-4">
-      <i className={`${icon} text-specifi-purple text-2xl`}></i>
+  <Card className="bg-white rounded-lg shadow-md p-8 text-center hover:shadow-lg transition-all duration-300">
+    <div className="h-16 w-16 rounded-full bg-warm-cream flex items-center justify-center mx-auto mb-4">
+      <i className={`${icon} text-bright-orange text-2xl`}></i>
     </div>
-    <h3 className="text-xl font-semibold text-midnight-indigo mb-2">{title}</h3>
-    <p className="text-deep-charcoal">{description}</p>
+    <h3 className="text-xl font-semibold text-charcoal mb-2">{title}</h3>
+    <p className="text-charcoal">{description}</p>
   </Card>
 );
 
@@ -27,11 +28,11 @@ const ComplianceBadge = ({ text }: { text: string }) => (
 
 const Compliance = () => {
   return (
-    <section className="py-20 bg-off-white">
+    <section className="py-20 bg-warm-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-3xl sm:text-4xl font-semibold text-midnight-indigo">Built-In Compliance You Can Prove</h1>
-          <p className="mt-4 text-lg text-deep-charcoal">Every dataset comes with comprehensive documentation and verification tools</p>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-charcoal">Built-In Compliance You Can Prove</h1>
+          <p className="mt-4 text-lg text-charcoal">Every dataset comes with comprehensive documentation and verification tools</p>
         </div>
 
         {/* Compliance blocks */}
@@ -83,12 +84,12 @@ const Compliance = () => {
 
         {/* Compliance data visualization */}
         <Card className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto">
-          <h3 className="text-xl font-semibold text-midnight-indigo mb-4 text-center">Compliance Case Study: AI Startup in Healthcare</h3>
-          <div className="h-64 w-full bg-gray-100 rounded-lg flex items-center justify-center">
+          <h3 className="text-xl font-semibold text-charcoal mb-4 text-center">Compliance Case Study: AI Startup in Healthcare</h3>
+          <div className="h-64 w-full bg-gray-50 rounded-lg flex items-center justify-center">
             <svg width="90%" height="90%" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
               {/* Simple Bar Chart */}
               <g transform="translate(50, 20)">
-                <text x="350" y="0" textAnchor="middle" className="font-poppins" fill="#181B3D" fontSize="18">Compliance Improvement Over Time</text>
+                <text x="350" y="0" textAnchor="middle" className="font-poppins" fill="#1F2937" fontSize="18">Compliance Improvement Over Time</text>
                 
                 {/* Y-Axis */}
                 <line x1="0" y1="0" x2="0" y2="300" stroke="#ccc" strokeWidth="2"/>
@@ -111,22 +112,25 @@ const Compliance = () => {
                 <line x1="0" y1="225" x2="700" y2="225" stroke="#eee" strokeWidth="1"/>
                 
                 {/* Data Bars - 68% to 97% */}
-                <rect x="70" y="96" width="60" height="204" fill="#E2E4F6" rx="4"/>
-                <rect x="220" y="60" width="60" height="240" fill="#E2E4F6" rx="4"/>
-                <rect x="370" y="30" width="60" height="270" fill="#E2E4F6" rx="4"/>
-                <rect x="520" y="9" width="60" height="291" fill="#645BFF" rx="4"/>
+                <rect x="70" y="96" width="60" height="204" fill="#FDBA74" rx="4"/>
+                <rect x="220" y="60" width="60" height="240" fill="#FDBA74" rx="4"/>
+                <rect x="370" y="30" width="60" height="270" fill="#FDBA74" rx="4"/>
+                <rect x="520" y="9" width="60" height="291" fill="#F97316" rx="4"/>
                 
                 {/* Data Labels */}
-                <text x="100" y="86" textAnchor="middle" fill="#181B3D" fontWeight="bold" fontSize="14">68%</text>
-                <text x="250" y="50" textAnchor="middle" fill="#181B3D" fontWeight="bold" fontSize="14">80%</text>
-                <text x="400" y="20" textAnchor="middle" fill="#181B3D" fontWeight="bold" fontSize="14">90%</text>
-                <text x="550" y="0" textAnchor="middle" fill="#181B3D" fontWeight="bold" fontSize="14">97%</text>
+                <text x="100" y="86" textAnchor="middle" fill="#1F2937" fontWeight="bold" fontSize="14">68%</text>
+                <text x="250" y="50" textAnchor="middle" fill="#1F2937" fontWeight="bold" fontSize="14">80%</text>
+                <text x="400" y="20" textAnchor="middle" fill="#1F2937" fontWeight="bold" fontSize="14">90%</text>
+                <text x="550" y="0" textAnchor="middle" fill="#1F2937" fontWeight="bold" fontSize="14">97%</text>
               </g>
             </svg>
           </div>
-          <p className="mt-4 text-deep-charcoal text-center">
+          <p className="mt-4 text-charcoal text-center">
             Our healthcare client improved their compliance score from 68% to 97% within 3 months of implementing SpecifiAI datasets, passing their regulatory audit with zero findings.
           </p>
+          <div className="flex justify-center mt-6">
+            <Button className="bg-bright-orange hover:bg-deep-orange text-white">Schedule Compliance Consultation</Button>
+          </div>
         </Card>
       </div>
     </section>

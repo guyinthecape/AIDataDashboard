@@ -6,6 +6,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Set Access-Control-Allow-Origin header for all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -44,7 +51,9 @@ app.use((req, res, next) => {
     const message = err.message || "Internal Server Error";
 
     res.status(status).json({ message });
-    throw err;
+    
+    // Don't throw the error, just log it
+    console.error(err);
   });
 
   // importantly only setup vite in development and after
@@ -59,12 +68,13 @@ app.use((req, res, next) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = 5000;
+  const port = process.env.PORT || 5000;
   server.listen({
     port,
-    host: "0.0.0.0",
-    reusePort: true,
+    host: "0.0.0.0", 
+    // Public network access
   }, () => {
-    log(`serving on port ${port}`);
+    log(`🚀 Server running in ${app.get('env')} mode on port ${port}`);
+    log(`📱 Frontend accessible at http://localhost:${port}`);
   });
 })();

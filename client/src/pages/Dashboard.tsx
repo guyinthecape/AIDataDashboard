@@ -620,25 +620,35 @@ const Dashboard = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {[1, 2, 3, 4, 5].map((item) => (
-                      <tr key={item} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-charcoal">INV-2023-{1000 + item}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-charcoal">May {item}, 2023</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-charcoal">$4,000.00</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            Paid
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <button className="text-bright-orange hover:text-deep-orange">Download PDF</button>
-                        </td>
-                      </tr>
-                    ))}
+                    {[0, 1, 2, 3, 4].map((offset) => {
+                      const invoiceDate = new Date();
+                      invoiceDate.setMonth(invoiceDate.getMonth() - offset);
+                      const formattedDate = invoiceDate.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                      });
+
+                      return (
+                        <tr key={offset} className="hover:bg-gray-50">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-charcoal">INV-{invoiceDate.getFullYear()}-{1000 + offset}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-charcoal">{formattedDate}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-charcoal">$4,000.00</td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              Paid
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button className="text-bright-orange hover:text-deep-orange">Download PDF</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

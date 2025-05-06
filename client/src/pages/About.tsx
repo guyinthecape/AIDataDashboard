@@ -1,18 +1,31 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+// Leadership images
+import ceoImage from "@assets/CEO.jpg";
+import cfoImage from "@assets/cfo.png";
+import ctoImage from "@assets/cto.jpeg";
+import cpoImage from "@assets/cpo.jpeg";
+import cooImage from "@assets/coo.jpeg";
+
 const TeamMember = ({ 
   name, 
   role, 
-  bio 
+  bio,
+  image
 }: { 
   name: string; 
   role: string; 
-  bio: string; 
+  bio: string;
+  image?: string;
 }) => (
   <div className="text-center">
     <div className="w-40 h-40 rounded-full mx-auto overflow-hidden mb-4 bg-warm-cream flex items-center justify-center shadow-md">
-      <i className="fas fa-user-circle text-bright-orange text-5xl"></i>
+      {image ? (
+        <img src={image} alt={name} className="w-full h-full object-cover" />
+      ) : (
+        <i className="fas fa-user-circle text-bright-orange text-5xl"></i>
+      )}
     </div>
     <h4 className="text-xl font-semibold text-charcoal">{name}</h4>
     <p className="text-bright-orange font-medium">{role}</p>
@@ -75,6 +88,7 @@ const About = () => {
               name="Vatsal Patel" 
               role="CEO & Co-Founder" 
               bio="Visionary leader with extensive experience in AI ethics and data governance, driving SpecifiAI's mission and strategy."
+              image={ceoImage}
             />
 
             {/* CMO */}
@@ -89,6 +103,7 @@ const About = () => {
               name="Yajan Munjal" 
               role="CTO" 
               bio="Technical innovator with expertise in building scalable data infrastructure and AI systems architecture."
+              image={ctoImage}
             />
 
             {/* CFO */}
@@ -96,6 +111,7 @@ const About = () => {
               name="Anish Kota" 
               role="CFO" 
               bio="Financial expert with experience in scaling startups and optimizing business operations in the tech sector."
+              image={cfoImage}
             />
 
             {/* CPO */}
@@ -103,6 +119,7 @@ const About = () => {
               name="Trisha" 
               role="Chief People Officer" 
               bio="HR leader focused on building diverse teams and fostering an innovative company culture in the AI industry."
+              image={cpoImage}
             />
 
             {/* COO */}
@@ -110,6 +127,7 @@ const About = () => {
               name="Anh Nguyen" 
               role="COO" 
               bio="Operations specialist with a track record of streamlining processes and scaling data-driven organizations."
+              image={cooImage}
             />
           </div>
         </div>

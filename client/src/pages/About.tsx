@@ -7,6 +7,7 @@ import cfoImage from "@assets/cfo.png";
 import ctoImage from "@assets/cto.jpeg";
 import cpoImage from "@assets/cpo.jpeg";
 import cooImage from "@assets/coo.jpeg";
+import cmoImage from "@assets/CMO.jpeg";
 
 const TeamMember = ({ 
   name, 
@@ -96,6 +97,7 @@ const About = () => {
               name="Palak Agarwal" 
               role="CMO" 
               bio="Marketing strategist with a background in technology branding and go-to-market strategies for AI products."
+              image={cmoImage}
             />
 
             {/* CTO */}

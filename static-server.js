@@ -4,7 +4,8 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// For Railway, use process.env.PORT; locally, use a different port to avoid conflicts
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 // Determine the correct path to the built files
 let staticPath = path.join(__dirname, 'dist', 'public');

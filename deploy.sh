@@ -29,5 +29,10 @@ if [ ! -d "dist" ] && [ ! -d "dist/public" ]; then
 fi
 
 echo "✅ Build completed successfully!"
-echo "🚀 To run the application, execute: node static-server.js"
+echo "🚀 To run the application, execute: node server.js"
 echo "==========================================="
+echo "ℹ️ For Railway deployment:"
+echo "   - The application will use the PORT environment variable"
+echo "   - The Procfile is already configured for Railway"
+echo "   - Make sure to select 'Build with Node.js' in Railway"
+echo "===========================================""
